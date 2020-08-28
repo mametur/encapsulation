@@ -1,12 +1,17 @@
 // refactor this function to a method
 const remix = (str, mixer) => {
-  return str.split('').join(mixer);
-}
+	return str.split('').join(mixer);
+};
 
 const obj = {
-  mixer: '',
-  remixed: '',
-  remix: function (str) { }
+	mixer: '',
+	remixed: '',
+	remix: function (str) {
+		this.remixed = str.split('').join(this.mixer);
+	},
+	getRemixed() {
+		return this.remixed;
+	},
 };
 
 obj.remix('hello');
