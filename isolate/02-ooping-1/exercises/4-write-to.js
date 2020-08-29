@@ -1,9 +1,13 @@
 'use strict';
 
 const obj = {
-  string: '',
-  setString: function (str) { },
-  remixString: function (mixer) { }
+	string: '',
+	setString: function (str) {
+		this.string = str;
+	},
+	remixString: function (mixer) {
+		this.string = this.string.split('').join(mixer);
+	},
 };
 
 obj.setString('hoy');
