@@ -17,6 +17,8 @@ Along the way you will get your first introduction to one of the main programmin
   - [Hard Skills](#hard-skills)
 - [About the Projects](#about-the-projects)
 - [Suggested Study](#suggested-study)
+  - [Isolate](./isolate/index.html)
+  - [Integrate](./integrate/index.html)
 - Sundays & Projects
   - [Week 1](#week-1)
   - [Week 2](#week-2)
@@ -89,10 +91,14 @@ In this module you'll learn how to:
 - [Practical JavaScript Tutorial](https://watchandcode.com/p/practical-javascript) (best tutorial ever)
 - [study.hyf.be/js/oop](https://study.hackyourfuture.be/javascript/oop) (more links)
 
-### Code to Study
+### Exercises
 
 - [Isolate](./isolate/index.html)
 - [Integrate](./integrate/README.md)
+- [OOP Refactors](./exercises/oop-refactors/README.md)
+
+### Code to Study
+
 - [Example Projects](./example-projects/README.md)
 
 ### OOP TDD
@@ -258,7 +264,7 @@ Screen recordings of class.  Coaches, when sending your PR's with links please .
 
 ---
 
-## Class 7 & 8
+### Class 7 & 8
 
 > [Anthony](https://github.com/Toinne/), [Bram](https://github.com/bramdevries/)
 
@@ -269,3 +275,10 @@ Screen recordings of class.  Coaches, when sending your PR's with links please .
     - Part 1: [binding, and why it matters](https://vimeo.com/401830596)
     - Part 2: [binding handlers](https://vimeo.com/401853625)
 
+### Class 9 & 10
+
+> [Anthony](https://github.com/Toinne/), [Unmesh](https://github.com/unmeshvrije/), [Evan](https://github.com/colevandersWands)
+
+1. Week 1:
+    - Part 1: [`this`](https://vimeo.com/453294595)
+    - Part 2: [OOP Refactor](https://vimeo.com/453294872)
