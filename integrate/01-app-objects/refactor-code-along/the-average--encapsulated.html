@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+    <title>the average - encapsulated</title>
+  </script>
+
+  <script id="views">
+    'use strict';
+
+  </script>
+
+		<style>
+			.discreet {
+				color: darkgray;
+				font-style: italic;
+			}
+
+			.numbers-list {
+				list-style: none;
+			}
+
+			.digital {
+				font-family: monospace;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main id="user interface">
+			<button onclick="console.log(log)">log</button>
+			<hr />
+			<form id="add-number-form" action="#">
+				<input id="number-input" type="number" value="0" />
+				<button>add number to list</button>
+				<br />
+				<button type="button" id="reset-button">reset</button>
+			</form>
+			<br />
+			<br />
+			<div id="average"></div>
+			<hr />
+			<div id="numbers-list"></div>
+		</main>
+
+		<script src="../../../app/lib/deep-clone.js"></script>
+
+		<script id="app-object">
+			'use strict';
+			const app = {
+			  state :{
+			  numbers: [],
+        average: 0},
+
+        addNumbers : function(addNewNumbers) {
+          this.state.push(addNewNumbers);
+        }
+
+        
+        
+			};
+
+			const log = [];	
+    </script>
+
+		<script id="handlers">
+			'use strict';
+
+			const addNumberHandler = () => {
+				const logEntry = {
+					action: 'add number',
+				};
+				log.push(logEntry);
+				const inputEl = document.getElementById('number-input');
+				const userInput = Number(inputEl.value);
+			
+				// log user input
+      logEntry.input = userInput;
+      // update state
+      app.addNumbers(userInput);
+      //state.average = average(app.state.numbers);
+      // log new state
+     /* logEntry.state = deepClone(state);
+
+      // update UI from state
+
+      // re-render the average
+      const averageContainer = document.getElementById('average');
+      averageContainer.innerHTML = '';
+      const renderedAverage = renderAverage(app.state.average);
+      averageContainer.appendChild(renderedAverage);
+      // log new view rendered from state
+      logEntry.viewAverage = renderedAverage;
+
+      // re-render the list of numbers
+      const numbersContainer = document.getElementById('numbers-list');
+      numbersContainer.innerHTML = '';
+      const renderedList = renderNumberList(app.state.numbers);
+      numbersContainer.appendChild(renderedList);
+      // log new view rendered from state
+      logEntry.viewNumbers = renderedList;
+			};*/
+		</script>
+
+		<script id="init">
+			'use strict';
+
+		</script>
+
+		<script id="listeners">
+			'use strict';
+			document.getElementById('add-number-form').addEventListener('submit', addNumberHandler);
+		</script>
+	</body>
+</html>
