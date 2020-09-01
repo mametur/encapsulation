@@ -2,13 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-    <title>the average - encapsulated</title>
-  </script>
-
-  <script id="views">
-    'use strict';
-
-  </script>
+		<title>the average - encapsulated</title>
 
 		<style>
 			.discreet {
@@ -31,7 +25,7 @@
 			<button onclick="console.log(log)">log</button>
 			<hr />
 			<form id="add-number-form" action="#">
-				<input id="number-input" type="number" value="0" />
+				<input id="number-input" type="number" name="number" value="0" />
 				<button>add number to list</button>
 				<br />
 				<button type="button" id="reset-button">reset</button>
@@ -47,69 +41,144 @@
 
 		<script id="app-object">
 			'use strict';
+
+			// state
 			const app = {
-			  state :{
-			  numbers: [],
-        average: 0},
+				state: {
+					numbers: [],
+					average: 0,
+				},
+				set addNumber(add) {
+					this.state.numbers.push(add);
+				},
+				get numbers() {
+					return this.state.numbers;
+				},
+				get averageNumbers() {
+					const arrOfNumbers = this.state.numbers;
+					if (arrOfNumbers.length === 0) {
+						this.state.average = 0;
+						return 0;
+					}
+					const numberOfNumbers = arrOfNumbers.length;
+					const sum = arrOfNumbers.reduce((sum, next) => sum + next);
+					const average = sum / numberOfNumbers;
+					this.state.average = average;
+					return average;
+				},
+				reset: function () {
+					this.state.numbers = [];
+				},
+			};
+		</script>
 
-        addNumbers : function(addNewNumbers) {
-          this.state.push(addNewNumbers);
-        }
+		<script id="logic"></script>
 
-        
-        
+		<script id="views">
+			'use strict';
+			const renderNumberList = (arrOfNumbers) => {
+				const ulEl = document.createElement('ul');
+				ulEl.className = 'numbers-list';
+				for (let i = 0; i < arrOfNumbers.length; i++) {
+					const liEl = document.createElement('li');
+					liEl.className = 'digital';
+					liEl.innerHTML = arrOfNumbers[i];
+					ulEl.appendChild(liEl);
+				}
+				return ulEl;
 			};
 
-			const log = [];	
-    </script>
+			const renderAverage = (average) => {
+				const pEl = document.createElement('p');
+				pEl.innerHTML = 'average: ' + average;
+				pEl.className = 'discreet';
+				return pEl;
+			};
+		</script>
 
 		<script id="handlers">
 			'use strict';
-
-			const addNumberHandler = () => {
+			const addNumberHandler = (event) => {
+				event.preventDefault();
 				const logEntry = {
 					action: 'add number',
 				};
 				log.push(logEntry);
-				const inputEl = document.getElementById('number-input');
-				const userInput = Number(inputEl.value);
-			
+
+				const inputEl = document.getElementById('number-input').value;
+				const userInput = Number(inputEl);
+
 				// log user input
-      logEntry.input = userInput;
-      // update state
-      app.addNumbers(userInput);
-      //state.average = average(app.state.numbers);
-      // log new state
-     /* logEntry.state = deepClone(state);
+				logEntry.input = userInput;
 
-      // update UI from state
+				// update state
+				app.addNumber = userInput;
+				app.averageNumbers;
 
-      // re-render the average
-      const averageContainer = document.getElementById('average');
-      averageContainer.innerHTML = '';
-      const renderedAverage = renderAverage(app.state.average);
-      averageContainer.appendChild(renderedAverage);
-      // log new view rendered from state
-      logEntry.viewAverage = renderedAverage;
+				logEntry.state = deepClone(app.state);
 
-      // re-render the list of numbers
-      const numbersContainer = document.getElementById('numbers-list');
-      numbersContainer.innerHTML = '';
-      const renderedList = renderNumberList(app.state.numbers);
-      numbersContainer.appendChild(renderedList);
-      // log new view rendered from state
-      logEntry.viewNumbers = renderedList;
-			};*/
+				// update UI from state
+
+				// re-render the average
+				const averageContainer = document.getElementById('average');
+				averageContainer.innerHTML = '';
+				const renderedAverage = renderAverage(app.averageNumbers);
+				averageContainer.appendChild(renderedAverage);
+				// log new view rendered from state
+				logEntry.viewAverage = renderedAverage;
+
+				// re-render the list of numbers
+				const numbersContainer = document.getElementById('numbers-list');
+				numbersContainer.innerHTML = '';
+				const renderedList = renderNumberList(app.numbers);
+				numbersContainer.appendChild(renderedList);
+				// log new view rendered from state
+				logEntry.viewNumbers = renderedList;
+			};
+			// RESET
+			const resetHandler = () => {
+				const logEntry = {
+					action: 'reset',
+				};
+				log.push(logEntry);
+
+				app.reset();
+				app.averageNumbers;
+				logEntry.state = deepClone(app.state);
+
+				document.getElementById('number-input').value = 0;
+				// re-render the average
+				const averageContainer = document.getElementById('average');
+				averageContainer.innerHTML = '';
+				const renderedAverage = renderAverage(app.averageNumbers);
+				averageContainer.appendChild(renderedAverage);
+				// log new view rendered from state
+				logEntry.viewAverage = renderedAverage;
+
+				// clear the numbers container
+				const numbersContainer = document.getElementById('numbers-list');
+				numbersContainer.innerHTML = '';
+			};
 		</script>
 
 		<script id="init">
 			'use strict';
-
+			// log
+			let log = [];
+			window.onload = () => {
+				const initLog = {
+					state: deepClone(app.state),
+				};
+				log.push(initLog);
+				console.log(log);
+			};
 		</script>
 
 		<script id="listeners">
 			'use strict';
+
 			document.getElementById('add-number-form').addEventListener('submit', addNumberHandler);
+			document.getElementById('reset-button').addEventListener('click', resetHandler);
 		</script>
 	</body>
 </html>
