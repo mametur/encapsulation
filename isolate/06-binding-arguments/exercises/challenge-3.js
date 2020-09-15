@@ -1,9 +1,20 @@
 'use strict';
 
 // psst. use the debugger!
-
-const obj = {};
-
+const obj = {
+	current: 0,
+	method: function (boundArg, freeArg) {
+		let result = 0;
+		if (this.current === 0) {
+			this.current += boundArg + freeArg;
+			result = boundArg - freeArg;
+		} else {
+			result = this.current - freeArg;
+			this.current += freeArg;
+		}
+		return result;
+	},
+};
 // don't change the code below this line
 const boundMethod = obj.method.bind(obj, 1);
 

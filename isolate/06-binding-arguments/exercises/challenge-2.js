@@ -8,13 +8,14 @@ const obj2 = { thing: 0 };
 const obj3 = { thing: true };
 
 function addThem(boundArg, freeArg) {
-  return this.thing + boundArg + freeArg;
+	return this.thing + boundArg + freeArg;
 }
 
 // do write code here
 
-
-
+const bound1 = addThem.bind(obj1, '_');
+const bound2 = addThem.bind(obj2, 1);
+const bound3 = addThem.bind(obj3, '');
 // don't change this code
 
 const result1 = bound1(1);
