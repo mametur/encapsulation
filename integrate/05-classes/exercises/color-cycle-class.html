@@ -36,46 +36,30 @@
 		<script id="ColorCycler-class">
 			class ColorCycler {
 				state = {
-					r: 0,
-					g: 0,
-					b: 0,
+					counter: 0,
 				};
+				get counter() {
+					return this.state.counter;
+				}
+				color = ['black', 'blue', 'yellow', 'green'];
 				constructor(x, y) {
 					this.state.x = x;
 					this.state.y = y;
 				}
 
 				renderTable() {
-					const tableEl = document.createElement('table');
-					//rows
-					for (let i = 0; i < this.state.y; i++) {
-						const trEl = document.createElement('tr');
-						// colom or data
-						for (let j = 0; j < this.state.x; j++) {
-							const tdEl = document.createElement('td');
-							const divEl = document.createElement('div');
-							divEl.addEventListener('click', this.changeBackground.bind(this, divEl));
-							divEl.classList.add('color-cycler');
-							tdEl.appendChild(divEl);
-							trEl.appendChild(tdEl);
-						}
-						tableEl.appendChild(trEl);
-					}
-					return tableEl;
+					const divEl = document.createElement('div');
+					divEl.addEventListener('click', this.changeBackground.bind(this, divEl));
+					divEl.classList.add('color-cycler');
+					return divEl;
 				}
 
 				changeBackground(div) {
-					this.state.r = ColorCycler.generateRandomNumber();
-					this.state.g = ColorCycler.generateRandomNumber();
-					this.state.b = ColorCycler.generateRandomNumber();
-
-					div.style.background = `rgb(${this.state.r}, ${this.state.g}, ${this.state.b})`;
-				}
-
-				static generateRandomNumber() {
-					// var x = Math.floor((Math.random() * 10) + 1);
-					const random = Math.floor(Math.random() * 256);
-					return random;
+					if (this.counter >= this.color.length) {
+						this.state.counter = 0;
+					}
+					div.style.background = this.color[this.state.counter];
+					this.state.counter++;
 				}
 			}
 		</script>
@@ -90,8 +74,20 @@
 				}
 
 				// --- above here works
-				const newTable = new ColorCycler(x, y);
-				currentCyclers.push(newTable);
+				const tableEl = document.createElement('table');
+				//rows
+				for (let i = 0; i < y; i++) {
+					const trEl = document.createElement('tr');
+					// columns or data
+					for (let j = 0; j < x; j++) {
+						const newTable = new ColorCycler(j, i);
+						currentCyclers.push(newTable);
+						const tdEl = document.createElement('td');
+						tdEl.appendChild(newTable.renderTable());
+						trEl.appendChild(tdEl);
+					}
+					tableEl.appendChild(trEl);
+				}
 
 				// create a new table with dimensions x, y
 				//  create a new cycler for each table cell
@@ -102,7 +98,7 @@
 
 				const rootEl = document.getElementById('root');
 				rootEl.innerHTML = '';
-				rootEl.appendChild(newTable.renderTable());
+				rootEl.appendChild(tableEl);
 			};
 		</script>
 
