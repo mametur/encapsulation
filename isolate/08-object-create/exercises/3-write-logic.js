@@ -1,25 +1,33 @@
 'use strict';
 
 const calculatorPrototype = {
-  get value() {
-
-  },
-  add: function (x, y = undefined) {
-
-  },
-  subtract: function (x, y = undefined) {
-
-  }
+	get value() {
+		return this.state.value;
+	},
+	add: function (x, y = undefined) {
+		if (y === undefined) {
+			this.state.value += x;
+		} else {
+			this.state.value = x + y;
+		}
+	},
+	subtract: function (x, y = undefined) {
+		if (y === undefined) {
+			this.state.value -= x;
+		} else if (x === 0) {
+			this.state.value = -y;
+		} else {
+			this.state.value -= x + y;
+		}
+	},
 };
 console.log('calculatorPrototype:', calculatorPrototype);
-
 
 console.log('--- calculator 1 ---');
 
 const calculator1 = Object.create(calculatorPrototype);
 calculator1.id = 1;
-calculator1.state = { value: 0, };
-
+calculator1.state = { value: 0 };
 
 calculator1.add(1);
 console.assert(calculator1.value === 1, 'Test 1.a');
@@ -36,16 +44,13 @@ console.assert(calculator1.value === 5, 'Test 1.d');
 calculator1.add(-1);
 console.assert(calculator1.value === 4, 'Test 1.e');
 
-
 console.log('calculator 1:', calculator1);
-
 
 console.log('--- calculator 2 ---');
 
 const calculator2 = Object.create(calculatorPrototype);
 calculator2.id = 2;
-calculator2.state = { value: 12, };
-
+calculator2.state = { value: 12 };
 
 calculator2.add(1, 0);
 console.assert(calculator2.value === 1, 'Test 2.a');
@@ -61,6 +66,5 @@ console.assert(calculator2.value === 3, 'Test 2.d');
 
 calculator2.subtract(0, 5);
 console.assert(calculator2.value === -5, 'Test 2.e');
-
 
 console.log('calculator 2:', calculator2);

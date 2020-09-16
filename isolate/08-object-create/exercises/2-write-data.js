@@ -3,29 +3,26 @@
 // write the initial data for each fakeSet instance (fill in _)
 
 const fakeSetPrototype = {
-  add: function (value) {
-    const doesNotIncludeValue = !this.values.includes(value);
-    if (doesNotIncludeValue) {
-      this.values.push(value)
-    }
-  },
-  has: function (value) {
-    return this.values.includes(value);
-  },
-  get size() {
-    return this.values.length;
-  }
+	add: function (value) {
+		const doesNotIncludeValue = !this.values.includes(value);
+		if (doesNotIncludeValue) {
+			this.values.push(value);
+		}
+	},
+	has: function (value) {
+		return this.values.includes(value);
+	},
+	get size() {
+		return this.values.length;
+	},
 };
 console.log('fakeSetPrototype:', fakeSetPrototype);
-
-
-
 
 console.log('--- fake set A ---');
 
 const fakeSetA = Object.create(fakeSetPrototype);
 fakeSetA.id = 'A';
-fakeSetA._ = _;
+fakeSetA.values = [];
 
 const testA1 = fakeSetA.size === 0;
 
@@ -45,15 +42,11 @@ const testA8 = fakeSetA.has(4) === false;
 
 console.log('fakeSetA:', fakeSetA);
 
-
-
-
 console.log('--- fake set B ---');
 
 const fakeSetB = Object.create(fakeSetPrototype);
 fakeSetB.id = 'B';
-fakeSetB._ = _;
-
+fakeSetB.values = [];
 
 const testB1 = fakeSetB.size === 0;
 
@@ -71,12 +64,7 @@ const testB6 = fakeSetB.has(1) === false;
 const testB7 = fakeSetB.has(2) === false;
 const testB8 = fakeSetB.has(3) === false;
 
-
 console.log('fakeSetB:', fakeSetB);
-
-
-
-
 
 // this exercise replicates two instance methods and one instance property of Set
 //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set

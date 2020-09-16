@@ -3,29 +3,26 @@
 // write the initial data for each fakeSet instance (fill in _)
 
 const incrementorPrototype = {
-  set stepSize(newValue) {
-    this.state.stepSize = newValue;
-  },
-  get value() {
-    return this.state.value;
-  },
-  increment: function () {
-    this.state.value += this.state.stepSize;
-  }
+	set stepSize(newValue) {
+		this.state.stepSize = newValue;
+	},
+	get value() {
+		return this.state.value;
+	},
+	increment: function () {
+		this.state.value += this.state.stepSize;
+	},
 };
 
-
 console.log('incrementorPrototype:', incrementorPrototype);
-
-
 
 console.log('--- incrementor A ---');
 
 const incrementorA = Object.create(incrementorPrototype);
 incrementorA.id = 'A';
 incrementorA.state = {
-  value: 0,
-  _: _
+	value: 0,
+	stepSize: 1,
 };
 
 incrementorA.increment(); // value --> 1
@@ -39,15 +36,13 @@ const testValueA = incrementorA.value === 4;
 
 console.log('incrementorA:', incrementorA);
 
-
-
 console.log('--- incrementor B ---');
 
 const incrementorB = Object.create(incrementorPrototype);
 incrementorB.id = 'B';
 incrementorB.state = {
-  _: _,
-  stepSize: -4
+	value: 2,
+	stepSize: -4,
 };
 
 incrementorB.increment(); // value --> -2
