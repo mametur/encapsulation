@@ -1,71 +1,113 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<title>ColorCycler: class</title>
 
-<head>
-  <meta charset='utf8'>
-  <title>ColorCycler: class</title>
+		<style>
+			.color-cycler {
+				height: 5em;
+				width: 5em;
+			}
+		</style>
+	</head>
 
-  <style>
-    .color-cycler {
-      height: 5em;
-      width: 5em;
-    }
-  </style>
+	<body>
+		<div id="user-interface">
+			<form>
+				<input type="number" min="0" value="2" name="x" />
+				x
+				<input type="number" min="0" value="2" name="y" />
+				<input id="create-table-button" type="button" value="create table" name="createTable" />
+			</form>
+			<p>
+				console log
+				<code>currentCyclers</code>
+				to see the state of each tile
+			</p>
+			<hr />
+			<div id="root"></div>
+		</div>
 
-</head>
+		<script id="data">
+			let currentCyclers = [];
+		</script>
 
-<body>
+		<script id="ColorCycler-class">
+			class ColorCycler {
+				state = {
+					r: 0,
+					g: 0,
+					b: 0,
+				};
+				constructor(x, y) {
+					this.state.x = x;
+					this.state.y = y;
+				}
 
-  <div id='user-interface'>
-    <form>
-      <input type='number' min='0' value='2' name='x' /> x <input type='number' min='0' value='2' name='y' />
-      <input id='create-table-button' type='button' value='create table' name='createTable' />
-    </form>
-    <p>console log <code>currentCyclers</code> to see the state of each tile</p>
-    <hr>
-    <div id='root'>
-    </div>
-  </div>
+				renderTable() {
+					const tableEl = document.createElement('table');
+					//rows
+					for (let i = 0; i < this.state.y; i++) {
+						const trEl = document.createElement('tr');
+						// colom or data
+						for (let j = 0; j < this.state.x; j++) {
+							const tdEl = document.createElement('td');
+							const divEl = document.createElement('div');
+							divEl.addEventListener('click', this.changeBackground.bind(this, divEl));
+							divEl.classList.add('color-cycler');
+							tdEl.appendChild(divEl);
+							trEl.appendChild(tdEl);
+						}
+						tableEl.appendChild(trEl);
+					}
+					return tableEl;
+				}
 
+				changeBackground(div) {
+					this.state.r = ColorCycler.generateRandomNumber();
+					this.state.g = ColorCycler.generateRandomNumber();
+					this.state.b = ColorCycler.generateRandomNumber();
 
-  <script id='data'>
-    let currentCyclers = [];
-  </script>
+					div.style.background = `rgb(${this.state.r}, ${this.state.g}, ${this.state.b})`;
+				}
 
-  <script id='ColorCycler-class'>
-    class ColorCycler {
+				static generateRandomNumber() {
+					// var x = Math.floor((Math.random() * 10) + 1);
+					const random = Math.floor(Math.random() * 256);
+					return random;
+				}
+			}
+		</script>
 
-    };
-  </script>
+		<script id="handler">
+			const createTableHandler = (event) => {
+				const x = Number(event.target.form.x.value);
+				const y = Number(event.target.form.y.value);
 
-  <script id='handler'>
-    const createTableHandler = (event) => {
-      currentCyclers = [];
+				if (x === 0 || y === 0) {
+					return alert('Pass numbers bigger than zero');
+				}
 
-      const x = Number(event.target.form.x.value);
-      const y = Number(event.target.form.y.value);
+				// --- above here works
+				const newTable = new ColorCycler(x, y);
+				currentCyclers.push(newTable);
 
-      // --- above here works
+				// create a new table with dimensions x, y
+				//  create a new cycler for each table cell
+				//  render the new cycler and append it to the cell
+				// be sure to push each cycler instance to currentCyclers!
 
-      // create a new table with dimensions x, y
-      //  create a new cycler for each table cell
-      //  render the new cycler and append it to the cell
-      // be sure to push each cycler instance to currentCyclers!
+				// --- below here works
 
+				const rootEl = document.getElementById('root');
+				rootEl.innerHTML = '';
+				rootEl.appendChild(newTable.renderTable());
+			};
+		</script>
 
-      // --- below here works
-
-      const rootEl = document.getElementById('root');
-      rootEl.innerHTML = '';
-      rootEl.appendChild(newTable);
-    };
-  </script>
-
-  <script id='init'>
-    document.getElementById('create-table-button')
-      .addEventListener('click', createTableHandler);
-  </script>
-
-</body>
-
+		<script id="init">
+			document.getElementById('create-table-button').addEventListener('click', createTableHandler);
+		</script>
+	</body>
 </html>
